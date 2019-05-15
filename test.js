@@ -1,5 +1,14 @@
 function oninputText() {
+  
   let inputText = document.getElementById('make_wave').value;
+  let outputMassive = document.getElementsByClassName("result");
+  for (let j = 0; j < outputMassive.length; j++) {
+    generateWaveText(outputMassive[j]);
+  }
+  
+  function generateWaveText(outputElement) {
+  outputElement.innerHTML = "";
+ 
   let outputStr = "";
   let nowPX = 0;
   let numberOf = 0;
@@ -8,8 +17,10 @@ function oninputText() {
   for (let i = 0; i<inputText.length; i++){
     
     if(inputText[i] == " "){
-      outputStr += `<span>${inputText[i]}</span>`;
-      continue;
+    let charElem = document.createElement("span");
+    charElem.innerHTML = inputText[i];
+    outputElement.appendChild(charElem);
+    continue;
     }
    
     if(numberOf == 0) { 
@@ -20,10 +31,13 @@ function oninputText() {
     } else{ 
      nowPX -= 5;
     }
- numberOf++;
- outputStr += `<span style="font-size:${nowPX}px">${inputText[i]}</span>`;
-  
+    numberOf++;
+    
+    let elemPX = "" + nowPX + "px";
+    let charElem = document.createElement("span");
+    charElem.innerHTML = inputText[i];
+    charElem.style.fontSize = elemPX;
+    outputElement.appendChild(charElem);
+  }   
   }
- console.log(outputStr);
- document.querySelector('.result').innerHTML = outputStr;
 }
